@@ -1,5 +1,7 @@
-from circleshape import *
+import pygame
+from circleshape import CircleShape
 from constants import *
+from shot import Shot
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -35,3 +37,10 @@ class Player(CircleShape):
             self.move(dt)
         if keys[pygame.K_s]:
             self.move(0 - dt)
+        if keys[pygame.K_SPACE]:
+            self.shoot()
+
+    def shoot(self):
+        missile = Shot(self.position.x, self.position.y)
+        missile.velocity = pygame.Vector2(0, 1).rotate(self.rotation)
+        missile.velocity *= PLAYER_SHOOT_SPEED
